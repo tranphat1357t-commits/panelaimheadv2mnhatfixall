@@ -731,7 +731,7 @@ body {
 </head>
 <body>
     <canvas id="particles-canvas"></canvas>
-    <audio id="background-music" loop>
+    <audio id="background-music">
         <source src="https://files.catbox.moe/wody9q.mp3" type="audio/mpeg">
         Your browser does not support audio.
     </audio>
@@ -954,7 +954,6 @@ body {
     </div>
     <div class="notification-container" id="notification-container"></div>
     <input type="file" id="config-file-input" accept=".json" style="display: none;">
-    <script src="particles.js"></script>
     <script>
 let isPlaying = false;
 let particlesEnabled = true;
@@ -1020,7 +1019,6 @@ function toggleMusic() {
 
 function playSound(type) {
     if (!soundEffectsEnabled) return;
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     const oscillator = audioContext.createOscillator();
     const gainNode = audioContext.createGain();
     
@@ -1804,6 +1802,7 @@ if (particlesEnabled) {
   document.getElementById("uid").innerText = deviceId;
 
   document.getElementById("device").innerText = getDevice();
+  
 
   // ===== CLOCK =====
 
@@ -1993,7 +1992,16 @@ if (particlesEnabled) {
   })();
 
 })();
-</script>
 
+</script>
+<script>
+function startParticles() {
+    console.log("Particles ON");
+}
+
+function stopParticles() {
+    console.log("Particles OFF");
+}
+</script>
 </body>
 </html>
