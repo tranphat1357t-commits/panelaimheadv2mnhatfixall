@@ -960,11 +960,20 @@ let particlesEnabled = true;
 let soundEffectsEnabled = true;
 let menuMinimized = false;
 let performanceInterval;
+let audioContext;
+function initAudioContext() {
+    if (!audioContext) {
+        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
+        audioContext = new AudioContextClass();
+    }
+
+    if (audioContext.state === "suspended") {
+        audioContext.resume();
+    }
+}
 const backgroundMusic = document.getElementById('background-music');
 const volumeSlider = document.getElementById('volume-slider');
 const musicToggle = document.getElementById('music-toggle');
-const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-const audioContext = new AudioContextClass();
 const featureStates = {
     head: false,
     shoulder: false,
@@ -1427,6 +1436,8 @@ function getNotificationIcon(type) {
     }
 }
 function setupEventListeners() {
+	document.addEventListener('click', initAudioContext, { once: true });
+    document.addEventListener('touchstart', initAudioContext, { once: true });
     document.querySelectorAll('button, .toggle-label, .control-btn').forEach(element => {
         element.addEventListener('click', () => {
             if (soundEffectsEnabled) {
