@@ -173,23 +173,46 @@ window.addEventListener("load", () => {
   }, 1000);
 
   // ===== API =====
-  async function verifyKey(key) {
+  // ===== API =====
+async function verifyKey(key) {
+  try {
     const res = await fetch(API_URL + "/api/verify", {
       method: "POST",
-      headers: {"Content-Type":"application/json"},
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({ key, deviceId })
     });
-    return res.json();
-  }
 
-  async function activateKey(key) {
+    return await res.json();
+
+  } catch (e) {
+    return {
+      ok: false,
+      error: "Không kết nối được server"
+    };
+  }
+}
+
+async function activateKey(key) {
+  try {
     const res = await fetch(API_URL + "/api/activate", {
       method: "POST",
-      headers: {"Content-Type":"application/json"},
+      headers: {
+        "Content-Type": "application/json"
+      },
       body: JSON.stringify({ key, deviceId })
     });
-    return res.json();
+
+    return await res.json();
+
+  } catch (e) {
+    return {
+      ok: false,
+      error: "Server lỗi hoặc bị chặn"
+    };
   }
+}
 
   // ===== BUTTON =====
   const status = document.getElementById("status");
