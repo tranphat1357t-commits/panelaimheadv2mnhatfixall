@@ -567,6 +567,15 @@ body {
     left: 70px;
 }
 
+
+.head-dot { top: 15px; left: 56px; }
+.shoulder-dot { top: 50px; left: 56px; }
+.arm-left-dot { top: 65px; left: 25px; }
+.arm-right-dot { top: 65px; left: 87px; }
+.torso-dot { top: 90px; left: 56px; }
+.leg-left-dot { top: 150px; left: 45px; }
+.leg-right-dot { top: 150px; left: 67px; }
+
 .target-dot.active {
     display: block;
 }
@@ -620,16 +629,11 @@ body {
 }
 
 @media (max-width: 768px) {
-    .target-display {
-        display: flex;
+    .menu-container {
+        margin: 1rem;
+        padding: 1.5rem;
+        max-width: calc(100vw - 2rem);
     }
-
-    .human-silhouette {
-        width: 90px;
-        height: 180px;
-    }
-}
-
     
     .title {
         font-size: 1.4rem;
@@ -798,7 +802,7 @@ body {
             <div class="feature-row">
                 <div class="feature-label">
                     <i class="fas fa-lock"></i>
-                    <span>Giảm Rung Khi Kéo Tâm</span>
+                    <span>Giảm Rung Khi Kéo Tâm </span>
                 </div>
                 <div class="toggle-switch">
                     <input type="checkbox" id="aim-arms" class="toggle-input">
@@ -820,7 +824,7 @@ body {
             <div class="feature-row">
                 <div class="feature-label">
                     <i class="fas fa-mobile-alt"></i>
-                    <span>Điều Chỉnh Tâm Linh Hoạt </span>
+                    <span>Điều Chỉnh Tâm Linh Hoạt</span>
                 </div>
                 <div class="toggle-switch">
                     <input type="checkbox" id="aim-legs" class="toggle-input">
