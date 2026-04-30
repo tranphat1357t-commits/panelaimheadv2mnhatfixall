@@ -1,4 +1,5 @@
-(function () {
+window.addEventListener("load", () => {
+  (function () {
   "use strict";
 
   const API_URL = "https://api-server-key.tranphat1357t.workers.dev";
@@ -254,3 +255,4 @@
   })();
 
 })();
+});
