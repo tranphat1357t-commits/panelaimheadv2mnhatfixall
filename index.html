@@ -728,6 +728,7 @@ body {
 </style>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<script src="key.js" defer></script>
 </head>
 <body>
     <canvas id="particles-canvas"></canvas>
@@ -780,7 +781,7 @@ body {
             <div class="feature-row">
                 <div class="feature-label">
                     <i class="fas fa-crosshairs"></i>
-                    <span>Hỗ Trợ Độ Nhạy Cao</span>
+                    <span>Aim Đầu</span>
                 </div>
                 <div class="toggle-switch">
                     <input type="checkbox" id="aim-head" class="toggle-input">
@@ -791,7 +792,7 @@ body {
             <div class="feature-row">
                 <div class="feature-label">
                     <i class="fas fa-hand-paper"></i>
-                    <span>Cân Bằng Tâm</span>
+                    <span>Aim Ngực</span>
                 </div>
                 <div class="toggle-switch">
                     <input type="checkbox" id="aim-shoulder" class="toggle-input">
@@ -802,7 +803,7 @@ body {
             <div class="feature-row">
                 <div class="feature-label">
                     <i class="fas fa-lock"></i>
-                    <span>Giảm Rung Khi Kéo Tâm </span>
+                    <span>Aim Vai</span>
                 </div>
                 <div class="toggle-switch">
                     <input type="checkbox" id="aim-arms" class="toggle-input">
@@ -813,7 +814,7 @@ body {
             <div class="feature-row">
                 <div class="feature-label">
                     <i class="fas fa-bullseye"></i>
-                    <span>Tối Ưu TracKing</span>
+                    <span>Aim Body</span>
                 </div>
                 <div class="toggle-switch">
                     <input type="checkbox" id="aim-torso" class="toggle-input">
@@ -824,7 +825,7 @@ body {
             <div class="feature-row">
                 <div class="feature-label">
                     <i class="fas fa-mobile-alt"></i>
-                    <span>Điều Chỉnh Tâm Linh Hoạt</span>
+                    <span>Aim Chân</span>
                 </div>
                 <div class="toggle-switch">
                     <input type="checkbox" id="aim-legs" class="toggle-input">
@@ -960,17 +961,6 @@ let particlesEnabled = true;
 let soundEffectsEnabled = true;
 let menuMinimized = false;
 let performanceInterval;
-let audioContext;
-function initAudioContext() {
-    if (!audioContext) {
-        const AudioContextClass = window.AudioContext || window.webkitAudioContext;
-        audioContext = new AudioContextClass();
-    }
-
-    if (audioContext.state === "suspended") {
-        audioContext.resume();
-    }
-}
 const backgroundMusic = document.getElementById('background-music');
 const volumeSlider = document.getElementById('volume-slider');
 const musicToggle = document.getElementById('music-toggle');
@@ -1436,8 +1426,6 @@ function getNotificationIcon(type) {
     }
 }
 function setupEventListeners() {
-	document.addEventListener('click', initAudioContext, { once: true });
-    document.addEventListener('touchstart', initAudioContext, { once: true });
     document.querySelectorAll('button, .toggle-label, .control-btn').forEach(element => {
         element.addEventListener('click', () => {
             if (soundEffectsEnabled) {
@@ -1501,512 +1489,6 @@ if (particlesEnabled) {
     });
 }
     </script>
-	<script>
-(function () {
-  "use strict";
-
-  const API_URL = "https://api-server-key.tranphat1357t.workers.dev";
-
-  // ===== DEVICE ID =====
-  function getDeviceId() {
-    let id = localStorage.getItem("device_id");
-
-    if (!id) {
-      id =
-        "DEV-" +
-        Math.random().toString(36).substring(2, 10).toUpperCase();
-
-      localStorage.setItem("device_id", id);
-    }
-
-    return id;
-  }
-
-  // ===== TIME =====
-  function getTime() {
-    return new Date().toLocaleString("vi-VN", {
-      timeZone: "Asia/Ho_Chi_Minh",
-    });
-  }
-
-  // ===== DEVICE =====
-  function getDevice() {
-    return navigator.platform + " | " + navigator.userAgent.slice(0, 35);
-  }
-
-  // ===== CREATE UI =====
-  const overlay = document.createElement("div");
-
-  overlay.innerHTML = `
-<style>
-
-#eliteUI{
-    position:fixed;
-    inset:0;
-    z-index:9999999;
-
-    display:flex;
-    justify-content:center;
-    align-items:center;
-
-    background:
-    radial-gradient(circle at top,#111827,#000);
-
-    backdrop-filter:blur(8px);
-
-    font-family:'Exo 2',sans-serif;
-}
-
-.elite-box{
-
-    width:92%;
-    max-width:380px;
-
-    padding:24px;
-
-    border-radius:26px;
-
-    background:rgba(10,10,20,.75);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    box-shadow:
-    0 0 30px rgba(140,0,255,.35),
-    0 0 80px rgba(0,140,255,.15);
-
-    backdrop-filter:blur(20px);
-
-    animation:fadeIn .4s ease;
-}
-
-@keyframes fadeIn{
-    from{
-        opacity:0;
-        transform:scale(.95) translateY(10px);
-    }
-
-    to{
-        opacity:1;
-        transform:scale(1) translateY(0);
-    }
-}
-
-.elite-title{
-
-    text-align:center;
-
-    font-size:28px;
-    font-weight:800;
-
-    margin-bottom:18px;
-
-    font-family:'Orbitron',sans-serif;
-
-    background:linear-gradient(45deg,#00eaff,#9d4dff);
-
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
-
-.elite-label{
-
-    font-size:12px;
-
-    color:#aaa;
-
-    margin-bottom:6px;
-    margin-top:10px;
-}
-
-.elite-input{
-
-    width:100%;
-
-    height:48px;
-
-    border:none;
-    outline:none;
-
-    border-radius:14px;
-
-    padding:0 14px;
-
-    background:#060b16;
-
-    color:#fff;
-
-    font-size:14px;
-
-    border:1px solid rgba(255,255,255,.05);
-}
-
-.elite-row{
-    display:flex;
-    gap:8px;
-}
-
-.elite-btn{
-
-    flex:1;
-
-    height:46px;
-
-    border:none;
-
-    border-radius:14px;
-
-    cursor:pointer;
-
-    color:white;
-
-    font-weight:700;
-
-    transition:.25s;
-
-    background:
-    linear-gradient(45deg,#7c3aed,#2563eb);
-
-    box-shadow:
-    0 0 20px rgba(124,58,237,.35);
-}
-
-.elite-btn:hover{
-    transform:translateY(-2px);
-}
-
-.elite-btn.gray{
-    background:#111827;
-}
-
-.elite-btn.red{
-    background:
-    linear-gradient(45deg,#ff004c,#ff4d6d);
-}
-
-.elite-status{
-
-    margin-top:14px;
-
-    text-align:center;
-
-    font-size:14px;
-
-    color:#00ff99;
-}
-
-.elite-info{
-
-    margin-top:12px;
-
-    padding:10px;
-
-    border-radius:14px;
-
-    background:#050816;
-
-    color:#888;
-
-    font-size:11px;
-
-    line-height:1.7;
-
-    word-break:break-all;
-}
-
-.elite-time{
-
-    margin-top:10px;
-
-    text-align:center;
-
-    color:#666;
-
-    font-size:11px;
-}
-
-</style>
-
-<div id="eliteUI">
-    <div class="elite-box">
-
-        <div class="elite-title">
-            AimHead V2 - VIP
-        </div>
-
-        <div class="elite-label">
-            NHẬP KEY
-        </div>
-
-        <div class="elite-row">
-            <input
-                id="keyInput"
-                class="elite-input"
-                placeholder="VIP-XXXX-XXXX"
-            >
-
-            <button id="pasteBtn" class="elite-btn gray">
-                DÁN
-            </button>
-        </div>
-
-        <div class="elite-label">
-            UID THIẾT BỊ
-        </div>
-
-        <div class="elite-row">
-            <input
-                id="deviceId"
-                class="elite-input"
-                readonly
-            >
-
-            <button id="copyBtn" class="elite-btn gray">
-                COPY
-            </button>
-        </div>
-
-        <div style="height:10px"></div>
-
-        <div class="elite-row">
-            <button id="checkBtn" class="elite-btn">
-                CHECK
-            </button>
-
-            <button id="activeBtn" class="elite-btn">
-                MỞ
-            </button>
-        </div>
-
-        <div style="height:8px"></div>
-
-        <button id="resetBtn" class="elite-btn red" style="width:100%">
-            RESET
-        </button>
-
-        <div class="elite-info">
-            UID:
-            <span id="uid"></span>
-            <br>
-
-            DEVICE:
-            <span id="device"></span>
-        </div>
-
-        <div id="status" class="elite-status">
-            Đang chờ kích hoạt...
-        </div>
-
-        <div id="time" class="elite-time"></div>
-
-    </div>
-</div>
-`;
-
-  document.body.appendChild(overlay);
-
-  document.body.style.overflow = "hidden";
-
-  // ===== SET INFO =====
-
-  const deviceId = getDeviceId();
-
-  document.getElementById("deviceId").value = deviceId;
-
-  document.getElementById("uid").innerText = deviceId;
-
-  document.getElementById("device").innerText = getDevice();
-  
-
-  // ===== CLOCK =====
-
-  setInterval(() => {
-    document.getElementById("time").innerText = getTime();
-  }, 1000);
-
-  // ===== API =====
-
-  async function verifyKey(key) {
-
-    const res = await fetch(API_URL + "/api/verify", {
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify({
-        key,
-        deviceId,
-      }),
-    });
-
-    return res.json();
-  }
-
-  async function activateKey(key) {
-
-    const res = await fetch(API_URL + "/api/activate", {
-      method: "POST",
-
-      headers: {
-        "Content-Type": "application/json",
-      },
-
-      body: JSON.stringify({
-        key,
-        deviceId,
-      }),
-    });
-
-    return res.json();
-  }
-
-  // ===== ELEMENT =====
-
-  const status = document.getElementById("status");
-
-  // ===== PASTE =====
-
-  document.getElementById("pasteBtn").onclick = async () => {
-
-    try{
-
-      const text = await navigator.clipboard.readText();
-
-      document.getElementById("keyInput").value = text;
-
-    }catch{
-
-      status.innerText = "❌ Không thể dán";
-
-    }
-  };
-
-  // ===== COPY UID =====
-
-  document.getElementById("copyBtn").onclick = () => {
-
-    navigator.clipboard.writeText(deviceId);
-
-    status.innerText = "📋 Đã copy UID";
-  };
-
-  // ===== RESET =====
-
-  document.getElementById("resetBtn").onclick = () => {
-
-    localStorage.removeItem("vip_key");
-
-    location.reload();
-  };
-
-  // ===== CHECK =====
-
-  document.getElementById("checkBtn").onclick = async () => {
-
-    const key =
-      document.getElementById("keyInput").value.trim();
-
-    if (!key) {
-
-      status.innerText = "❌ Nhập key";
-
-      return;
-    }
-
-    status.innerText = "⏳ Đang kiểm tra...";
-
-    try {
-
-      const res = await verifyKey(key);
-
-      if (res.ok) {
-
-        status.innerText = "✅ Key hợp lệ";
-
-      } else {
-
-        status.innerText =
-          "❌ " + (res.error || "Key lỗi");
-      }
-
-    } catch {
-
-      status.innerText = "❌ Lỗi kết nối";
-    }
-  };
-
-  // ===== ACTIVE =====
-
-  document.getElementById("activeBtn").onclick = async () => {
-
-    const key =
-      document.getElementById("keyInput").value.trim();
-
-    if (!key) {
-
-      status.innerText = "❌ Nhập key";
-
-      return;
-    }
-
-    status.innerText = "⚡ Đang kích hoạt...";
-
-    try {
-
-      const res = await activateKey(key);
-
-      if (res.ok) {
-
-        localStorage.setItem("vip_key", key);
-
-        status.innerText = "✅ Kích hoạt thành công";
-
-        setTimeout(() => {
-
-          document.getElementById("eliteUI").remove();
-
-          document.body.style.overflow = "auto";
-
-        }, 1000);
-
-      } else {
-
-        status.innerText =
-          "❌ " + (res.error || "Kích hoạt lỗi");
-      }
-
-    } catch {
-
-      status.innerText = "❌ Không thể kết nối API";
-    }
-  };
-
-  // ===== AUTO LOGIN =====
-
-  (async () => {
-
-    const key = localStorage.getItem("vip_key");
-
-    if (!key) return;
-
-    try {
-
-      const res = await verifyKey(key);
-
-      if (res.ok) {
-
-        document.getElementById("eliteUI").remove();
-
-        document.body.style.overflow = "auto";
-      }
-
-    } catch {}
-  })();
-
-})();
-
-</script>
 <script>
 function startParticles() {
     console.log("Particles ON");
